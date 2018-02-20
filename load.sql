@@ -1,4 +1,3 @@
-DROP DATABASE twisterdb;
 CREATE DATABASE twisterdb;
 USE twisterdb;
 
