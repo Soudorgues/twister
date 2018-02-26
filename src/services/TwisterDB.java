@@ -1,10 +1,12 @@
 package services;
 
 import java.net.UnknownHostException;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.json.JSONException;
@@ -40,17 +42,42 @@ public class TwisterDB {
 		res.close();
 		s.close();
 		c.close();
+		return exist;
 	}
-	public static void addtoBDUser(String login, String name, String frame, String pwd) {
+	public static void addtoBDUser(String login, String name, String fname, String pwd) {
 		Connection c = getMySQLConnection();
 		if (userExists(login)) {
 			System.out.println("User already exists");
 		} else {
-			String query = "INSERT "
+			String query = "INSERT INTO login VALUES (" + login + ","
+										+ "PASSWORD("  + pwd   + ")," +
+														 name  + "," +
+														 fname + ")";
+			Statement s = c.createStatement();
+			s.executeUpdate(query);
+			s.close();
+			c.close();
 		}
 	}
 	public static boolean checkPassword(String user, String mdp) { return false; }
-	public static String insertConnexion(String user, boolean root) { return "Clef"; }
+	
+	public static String insertConnexion(String user, boolean root) {
+		GregorianCalendar gc = new GregorianCalendar();
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		if (!userExists(user)) {
+			System.out.println("User doesn't exist");
+			return null;
+		}
+		String id_user = null;
+		String query = "SELECT id FROM login WHERE login='"+ user + "'";
+		ResultSet res = s.executeQuery(query);
+		while (s.next()) {
+			id_user = res.getString("id");
+		}
+		query = "INSERT INTO tw_session VALUES (" + id_user + ",", gc.getTime() + ","
+		
+	}
 	public static boolean isRoot(String user) { return false; }
 	
 	public static DBCollection getCollection(String nom_collection) {
