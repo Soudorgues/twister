@@ -22,7 +22,7 @@ public class TwisterDB {
 	public static Connection getMySQLConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-		} catch {
+		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("Exception : ");
 			System.err.println(e.getMessage());
 		}
