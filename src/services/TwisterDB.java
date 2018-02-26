@@ -24,12 +24,12 @@ public class TwisterDB {
 	public static Connection getMySQLConnection() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			Connection c = Driver.getConnection(bd.DBStatic.mysql_host,  bd.DBStatic.mysql_username, bd.DBStatic.mysql_password);
+			return c;
 		} catch (java.lang.ClassNotFoundException e) {
 			System.err.print("Exception : ");
 			System.err.println(e.getMessage());
 		}
-		Connection c = Driver.getConnection(bd.DBStatic.mysql_host,  bd.DBStatic.mysql_username, bd.DBStatic.mysql_password);
-		return c;
 	}
 	
 	public static boolean userExists(String login) {
@@ -59,7 +59,22 @@ public class TwisterDB {
 			c.close();
 		}
 	}
-	public static boolean checkPassword(String user, String mdp) { return false; }
+	public static boolean checkPassword(String user, String mdp) {
+		Connection c = getMySQLConnection();
+		String query  = "SELECT pwd FROM login WHERE login='" + user + "'";
+		boolean checkpwd = false;
+		
+		if (userExists(user)) {
+			Statement s = c.createStatement();
+			ResultSet res = s.executeQuery(query);
+			while (res.next()) {
+				checkpwd = res.getString("pwd") == mdp;
+			}
+		}
+		s.close();
+		c.close();
+		return checkpwd;
+	}
 	
 	public static String insertConnexion(String user, boolean root) {
 		GregorianCalendar gc = new GregorianCalendar();
@@ -78,7 +93,15 @@ public class TwisterDB {
 		query = "INSERT INTO tw_session VALUES (" + id_user + ",", gc.getTime() + ","
 		
 	}
-	public static boolean isRoot(String user) { return false; }
+	public static boolean isRoot(String user) {
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		String query = "SELECT isRoot FROM tw_session WHERE login='" + user + "'";
+		ResultSet res = s.executeQuery();
+		while (res.next()) {
+			return res.getBoolean("isRoot") == true;
+		}
+	}
 	
 	public static DBCollection getCollection(String nom_collection) {
 		DBCollection message = null;

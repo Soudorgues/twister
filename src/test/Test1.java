@@ -11,6 +11,7 @@ import services.TwisterDB;
 
 public class Test1 {
 	public static void main(String [] args) {
+	/*
 		GregorianCalendar c = new GregorianCalendar();
 		//TwisterDB.addMessage(13, c.getTime(), "mesa");
 		List<Integer> a = new ArrayList<Integer> ();
@@ -27,4 +28,18 @@ public class Test1 {
 		}
 		
 	}
+	*/
+		
+		TwisterDB.addtoBDUser("vinz", "Vidal", "Vincent", "password123");
+		if (TwisterDB.userExists("vinz")) {
+			System.out.println("vinz existe");
+			TwisterDB.insertConnexion("vinz", false);
+			if (TwisterDB.isRoot("vinz")) {
+				System.out.println("Root");
+			}
+			if (TwisterDB.checkPassword("vinz", "password123")) {
+				System.out.println("OK");
+			}
+		}
+		
 }
