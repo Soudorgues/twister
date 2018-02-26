@@ -1,6 +1,7 @@
 package services;
 
 import java.net.UnknownHostException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -12,11 +13,42 @@ import org.json.JSONObject;
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 
+import bd.DBStatic.*;
+import sun.rmi.transport.Connection;
+
 public class TwisterDB {
 	public TwisterDB() {}
 	
-	public static boolean userExists(String login) { return false; }
-	public static void addtoBDUser(String login, String name, String frame, String pwd) { return; }
+	public static Connection getMySQLConnection() {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch {
+			System.err.print("Exception : ");
+			System.err.println(e.getMessage());
+		}
+		Connection c = Driver.getConnection(bd.DBStatic.mysql_host,  bd.DBStatic.mysql_username, bd.DBStatic.mysql_password);
+		return c;
+	}
+	
+	public static boolean userExists(String login) {
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		String query = "SELECT login FROM login";
+		
+		ResultSet res = s.executeQuery(query);
+		boolean exist = res.hasNext();
+		res.close();
+		s.close();
+		c.close();
+	}
+	public static void addtoBDUser(String login, String name, String frame, String pwd) {
+		Connection c = getMySQLConnection();
+		if (userExists(login)) {
+			System.out.println("User already exists");
+		} else {
+			String query = "INSERT "
+		}
+	}
 	public static boolean checkPassword(String user, String mdp) { return false; }
 	public static String insertConnexion(String user, boolean root) { return "Clef"; }
 	public static boolean isRoot(String user) { return false; }
@@ -42,6 +74,11 @@ public class TwisterDB {
 		message.insert(dbo);
 	}
 	
+	public static void deleteMessage(int messageid) {
+		DBCollection message = getCollection("message");
+		message.remove(new BasicDBObject().append("idmessage", messageid));
+	}
+	
 	public static List<JSONObject> getMessage(List<Integer> authors) {
 		List<JSONObject> result = new ArrayList<> ();
 		DBCollection message 	= getCollection("message");
@@ -58,6 +95,19 @@ public class TwisterDB {
 			}
 		}
 		return result;
+	}
+	
+	public static List<JSONObject> listMessageUser(String login) {
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		List<Integer> users = new ArrayList<> ();
+		String query = "SELECT id FROM login";
+		
+		ResultSet res = s.executeQuery(query);
+		while (res.next()) {
+			users.add(res.getInt("id"));
+		}
+		return getMessage(users);
 	}
 }
 
