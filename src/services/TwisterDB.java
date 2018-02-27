@@ -2,6 +2,7 @@ package services;
 
 import java.net.UnknownHostException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,60 +13,67 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.*;
+
 import com.mongodb.*;
 import com.mongodb.util.JSON;
 
 import bd.DBStatic.*;
-import sun.rmi.transport.Connection;
 
 public class TwisterDB {
 	public TwisterDB() {}
 	
-	public static Connection getMySQLConnection() {
+	public static Connection getMySQLConnection() throws ClassNotFoundException {
+		Connection c = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection c = Driver.getConnection(bd.DBStatic.mysql_host,  bd.DBStatic.mysql_username, bd.DBStatic.mysql_password);
-			return c;
-		} catch (java.lang.ClassNotFoundException e) {
+			c = DriverManager.getConnection("jdbc:mysql://"+bd.DBStatic.mysql_host+"/"+bd.DBStatic.mysql_db, bd.DBStatic.mysql_username, bd.DBStatic.mysql_password);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			System.err.print("Exception : ");
 			System.err.println(e.getMessage());
+			e.printStackTrace();
 		}
+		return c;
 	}
 	
-	public static boolean userExists(String login) {
+	public static boolean userExists(String login) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		String query = "SELECT login FROM login";
 		
 		ResultSet res = s.executeQuery(query);
-		boolean exist = res.hasNext();
+		boolean exist = res.next();
 		res.close();
 		s.close();
 		c.close();
 		return exist;
 	}
-	public static void addtoBDUser(String login, String name, String fname, String pwd) {
+	public static void addtoBDUser(String login, String name, String fname, String pwd) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		if (userExists(login)) {
 			System.out.println("User already exists");
 		} else {
-			String query = "INSERT INTO login VALUES (" + login + ","
-										+ "PASSWORD("  + pwd   + ")," +
-														 name  + "," +
-														 fname + ")";
+			String query = 
+				"INSERT INTO login(login,pwd,nom,prenom) VALUES ('" + login + "',"
+										+ "PASSWORD('"  + pwd   + "'),'" +
+														 name  + "','" +
+														 fname + "')";
 			Statement s = c.createStatement();
+			System.out.println(query);
 			s.executeUpdate(query);
 			s.close();
 			c.close();
 		}
 	}
-	public static boolean checkPassword(String user, String mdp) {
+	public static boolean checkPassword(String user, String mdp) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
+		Statement s = null;
 		String query  = "SELECT pwd FROM login WHERE login='" + user + "'";
 		boolean checkpwd = false;
 		
 		if (userExists(user)) {
-			Statement s = c.createStatement();
+			s = c.createStatement();
 			ResultSet res = s.executeQuery(query);
 			while (res.next()) {
 				checkpwd = res.getString("pwd") == mdp;
@@ -76,31 +84,41 @@ public class TwisterDB {
 		return checkpwd;
 	}
 	
-	public static String insertConnexion(String user, boolean root) {
+	public static String insertConnexion(String user, boolean root) throws ClassNotFoundException, SQLException {
 		GregorianCalendar gc = new GregorianCalendar();
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		if (!userExists(user)) {
 			System.out.println("User doesn't exist");
+			s.close();
+			c.close();
 			return null;
 		}
 		String id_user = null;
 		String query = "SELECT id FROM login WHERE login='"+ user + "'";
 		ResultSet res = s.executeQuery(query);
-		while (s.next()) {
+		while (res.next()) {
 			id_user = res.getString("id");
 		}
-		query = "INSERT INTO tw_session VALUES (" + id_user + ",", gc.getTime() + ","
+		query = "INSERT INTO tw_session VALUES (" + id_user + "," + gc.getTime() + ",";
+		s.executeUpdate(query);
+		s.close();
+		c.close();
+		return "clef";
 		
 	}
-	public static boolean isRoot(String user) {
+	public static boolean isRoot(String user) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		String query = "SELECT isRoot FROM tw_session WHERE login='" + user + "'";
-		ResultSet res = s.executeQuery();
+		ResultSet res = s.executeQuery(query);
+		boolean ret = false;
 		while (res.next()) {
-			return res.getBoolean("isRoot") == true;
+			ret = res.getBoolean("isRoot") == true;
 		}
+		s.close();
+		c.close();
+		return ret;
 	}
 	
 	public static DBCollection getCollection(String nom_collection) {
@@ -147,7 +165,7 @@ public class TwisterDB {
 		return result;
 	}
 	
-	public static List<JSONObject> listMessageUser(String login) {
+	public static List<JSONObject> listMessageUser(String login) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		List<Integer> users = new ArrayList<> ();
@@ -157,6 +175,8 @@ public class TwisterDB {
 		while (res.next()) {
 			users.add(res.getInt("id"));
 		}
+		s.close();
+		c.close();
 		return getMessage(users);
 	}
 }

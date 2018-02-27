@@ -1,5 +1,6 @@
 package test;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -10,7 +11,7 @@ import org.json.JSONObject;
 import services.TwisterDB;
 
 public class Test1 {
-	public static void main(String [] args) {
+	public static void main(String [] args) throws ClassNotFoundException, SQLException {
 	/*
 		GregorianCalendar c = new GregorianCalendar();
 		//TwisterDB.addMessage(13, c.getTime(), "mesa");
@@ -31,9 +32,11 @@ public class Test1 {
 	*/
 		
 		TwisterDB.addtoBDUser("vinz", "Vidal", "Vincent", "password123");
+		System.out.println("success");
 		if (TwisterDB.userExists("vinz")) {
 			System.out.println("vinz existe");
 			TwisterDB.insertConnexion("vinz", false);
+			System.out.println("session success");
 			if (TwisterDB.isRoot("vinz")) {
 				System.out.println("Root");
 			}
@@ -41,5 +44,6 @@ public class Test1 {
 				System.out.println("OK");
 			}
 		}
+	}
 		
 }
