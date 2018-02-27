@@ -50,6 +50,17 @@ public class TwisterDB {
 		c.close();
 		return exist;
 	}
+	
+	public static void deleteUser(String login) throws ClassNotFoundException, SQLException{
+		Connection c = getMySQLConnection();
+		String query = "DELETE FROM login where login='"+login+"'";
+		
+		Statement st = c.createStatement();
+		st.executeUpdate(query);
+		st.close();
+		c.close();
+	}
+		
 	public static void addtoBDUser(String login, String name, String fname, String pwd) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		if (userExists(login)) {
@@ -66,6 +77,10 @@ public class TwisterDB {
 			s.close();
 			c.close();
 		}
+	}
+	
+	public static void addFriend(String login, String id) {
+		
 	}
 	/*
 	public static boolean checkPassword(String user, String mdp) throws ClassNotFoundException, SQLException {
@@ -119,14 +134,23 @@ public class TwisterDB {
 			id_user = res.getInt("id");
 		}
 		String clef = generate_key();
-		query = "INSERT INTO tw_session(idUser, time, clef, isRoot) VALUES (" + id_user + "," + "NOW(),'" + clef + "'," + bool2string(root) +")";
-		System.out.println(query);
+		query = "INSERT INTO tw_session(idUser, time, clef, isRoot, expired) VALUES (" + id_user + "," + "NOW(),'" + clef + "'," + bool2string(root) +", 0)";
 		s.executeUpdate(query);
 		s.close();
 		c.close();
 		return clef;
-		
 	}
+	
+	public static boolean logout(String key) throws ClassNotFoundException, SQLException {
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		String query = "UPDATE tw_session SET expired=1 WHERE clef='"+ key +"'";
+		s.executeUpdate(query);
+		s.close();
+		c.close();
+		return true;
+	}
+	
 	public static boolean isRoot(String user) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
@@ -159,6 +183,8 @@ public class TwisterDB {
 		}
 		return message;
 	}
+	
+	
 	public static void addMessage(int userid, Date date, String msg) {
 		DBCollection message = getCollection("message");
 		BasicDBObject dbo = new BasicDBObject();
