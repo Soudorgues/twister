@@ -1,6 +1,13 @@
 package servlets.user;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import services.*;
 import serviceTools.*;
@@ -8,32 +15,22 @@ import serviceTools.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 // foo
-public class Login {
+public class Login extends HttpServlet{
 	public Login() {}
-	
-	public static JSONObject login(String user, String mdp) throws ClassNotFoundException, SQLException {
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String login = request.getParameter("login"); 
+		String pwd = request.getParameter("pwd");
+		
 		JSONObject ret = null;
-		boolean root = TwisterDB.isRoot(user);
-		String key = null;
 		
-		if (! TwisterDB.userExists(user)) {
-			ret = ServiceRefused.serviceRefused("user doesn't exists", 1000);
-			return ret;
-		}
-		if (! TwisterDB.checkPassword(user, mdp)) {
-			ret = ServiceRefused.serviceRefused("wrong password", 1000);
-			return ret;
-		}
-		key = TwisterDB.insertConnexion(user, root);
 		try {
-			ret = new JSONObject();
-			ret.put("status", "OK");
-			ret.put("key", key);
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ret = services.User.login(login, pwd);
+		} catch (Exception e) {
+			ret = serviceTools.ServiceRefused.serviceRefused("Erreur de login", 1000);
 		}
 		
-		return ret;
+		PrintWriter out = response.getWriter();
+		response.setContentType("text/plain");
+		out.print(ret.toString());
 	}
 }

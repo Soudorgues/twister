@@ -67,6 +67,7 @@ public class TwisterDB {
 			c.close();
 		}
 	}
+	/*
 	public static boolean checkPassword(String user, String mdp) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s = null;
@@ -77,15 +78,32 @@ public class TwisterDB {
 			s = c.createStatement();
 			ResultSet res = s.executeQuery(query);
 			while (res.next()) {
-				checkpwd = res.getString("pwd") == mdp;
+				checkpwd = res.getString("pwd").equals(mdp);
 			}
 		}
 		s.close();
 		c.close();
 		return checkpwd;
 	}
+	*/
 	
-	public static String insertConnexion(String user, String root) throws ClassNotFoundException, SQLException {
+  	public static boolean checkPassword(String login, String mdp) throws SQLException, ClassNotFoundException
+	{
+		Connection c= getMySQLConnection();
+		Statement lecture = c.createStatement();
+		String query="select * from login where login='"+login+"';";
+		ResultSet cursor=lecture.executeQuery(query);
+		boolean retour;
+		if (!cursor.next())
+			retour=false;
+		else
+			retour=cursor.getString("pwd").equals(mdp);
+		lecture.close();
+		c.close();
+		return retour;
+	}
+	
+	public static String insertConnexion(String user, boolean root) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		if (!userExists(user)) {
@@ -101,7 +119,7 @@ public class TwisterDB {
 			id_user = res.getInt("id");
 		}
 		String clef = generate_key();
-		query = "INSERT INTO tw_session(idUser, time, clef, isRoot) VALUES (" + id_user + "," + "NOW(),'" + clef + "'," + root +")";
+		query = "INSERT INTO tw_session(idUser, time, clef, isRoot) VALUES (" + id_user + "," + "NOW(),'" + clef + "'," + bool2string(root) +")";
 		System.out.println(query);
 		s.executeUpdate(query);
 		s.close();
@@ -147,12 +165,13 @@ public class TwisterDB {
 		dbo.put("user_id", userid);
 		dbo.put("date", date);
 		dbo.put("content", msg);
+		dbo.put("idmessage", generate_key());
 		message.insert(dbo);
 	}
 	
-	public static void deleteMessage(int messageid) {
+	public static void deleteMessage(int userid, String messageid) {
 		DBCollection message = getCollection("message");
-		message.remove(new BasicDBObject().append("idmessage", messageid));
+		message.remove(new BasicDBObject().append("idmessage", messageid).append("user_id", userid));
 	}
 	
 	public static List<JSONObject> getMessage(List<Integer> authors) {
@@ -200,6 +219,10 @@ public class TwisterDB {
 		s.close();
 		c.close();
 		return getMessage(users);
+	}
+	
+	private static String bool2string(boolean b) {
+		return (b ? "true" : "false");
 	}
 }
 

@@ -23,7 +23,7 @@ public class CreateUser extends HttpServlet {
 		try {
 			ret = services.User.createUser(login, name, frame, pwd);
 		} catch (Exception e) {
-			
+			ret = serviceTools.ServiceRefused.serviceRefused("Erreur lors de la création d'user", 1000);
 		}
 		
 		PrintWriter out = response.getWriter();
