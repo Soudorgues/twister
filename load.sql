@@ -18,7 +18,7 @@ CREATE TABLE friend(
 
 
 CREATE TABLE tw_session(
-	id		INTEGER PRIMARY KEY,
+	id		INTEGER PRIMARY KEY auto_increment,
 	idUser		INTEGER,
 	time		TIMESTAMP,
 	clef		VARCHAR(255),

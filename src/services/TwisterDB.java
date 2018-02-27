@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +41,7 @@ public class TwisterDB {
 	public static boolean userExists(String login) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
-		String query = "SELECT login FROM login";
+		String query = "SELECT login FROM login WHERE login='" + login + "'";
 		
 		ResultSet res = s.executeQuery(query);
 		boolean exist = res.next();
@@ -84,8 +85,7 @@ public class TwisterDB {
 		return checkpwd;
 	}
 	
-	public static String insertConnexion(String user, boolean root) throws ClassNotFoundException, SQLException {
-		GregorianCalendar gc = new GregorianCalendar();
+	public static String insertConnexion(String user, String root) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		if (!userExists(user)) {
@@ -94,24 +94,32 @@ public class TwisterDB {
 			c.close();
 			return null;
 		}
-		String id_user = null;
+		int id_user = 0;
 		String query = "SELECT id FROM login WHERE login='"+ user + "'";
 		ResultSet res = s.executeQuery(query);
 		while (res.next()) {
-			id_user = res.getString("id");
+			id_user = res.getInt("id");
 		}
-		query = "INSERT INTO tw_session VALUES (" + id_user + "," + gc.getTime() + ",";
+		String clef = generate_key();
+		query = "INSERT INTO tw_session(idUser, time, clef, isRoot) VALUES (" + id_user + "," + "NOW(),'" + clef + "'," + root +")";
+		System.out.println(query);
 		s.executeUpdate(query);
 		s.close();
 		c.close();
-		return "clef";
+		return clef;
 		
 	}
 	public static boolean isRoot(String user) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
-		String query = "SELECT isRoot FROM tw_session WHERE login='" + user + "'";
+		int id_user = 0;
+		String query = "SELECT id FROM login WHERE login='"+ user + "'";
 		ResultSet res = s.executeQuery(query);
+		while (res.next()) {
+			id_user = res.getInt("id");
+		}
+		query = "SELECT isRoot FROM tw_session WHERE idUser=" + id_user;
+		res = s.executeQuery(query);
 		boolean ret = false;
 		while (res.next()) {
 			ret = res.getBoolean("isRoot") == true;
@@ -165,11 +173,25 @@ public class TwisterDB {
 		return result;
 	}
 	
+	public static String generate_key() {
+		String key = "";
+		char c;
+		for(int i=0; i<32; i++) {
+			Random r = new Random();
+			if(Math.random() < 0.5) 
+				c = (char)(r.nextInt(26) + 'A');
+			else
+				c = (char)(r.nextInt(26) + 'a');
+			key += c;			
+		}
+		return key;		
+	}
+	
 	public static List<JSONObject> listMessageUser(String login) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		List<Integer> users = new ArrayList<> ();
-		String query = "SELECT id FROM login";
+		String query = "SELECT id FROM login WHERE login='" + login + "'";
 		
 		ResultSet res = s.executeQuery(query);
 		while (res.next()) {
@@ -180,7 +202,5 @@ public class TwisterDB {
 		return getMessage(users);
 	}
 }
-
-
 
 

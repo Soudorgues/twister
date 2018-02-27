@@ -27,7 +27,7 @@ public class CreateUser extends HttpServlet {
 		}
 		
 		PrintWriter out = response.getWriter();
-		response.setContentType("plain/text");
+		response.setContentType("text/plain");
 		out.print(ret.toString());
 	}
 }

@@ -4,7 +4,7 @@
 	<display-name>CreateUserLogin</display-name> 
 	<servlet> 
 		<servlet-name>TestCreateUser</servlet-name> 
-		<servlet-class>User</servlet-class> 
+		<servlet-class>servlets.user.CreateUser</servlet-class> 
 	</servlet>
 	
 	<servlet> 

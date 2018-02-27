@@ -1,5 +1,7 @@
 package services;
 
+import java.sql.SQLException;
+
 import serviceTools.ServiceRefused;
 import services.*;
 
@@ -9,7 +11,7 @@ import org.json.JSONObject;
 public class User {
 	public User() {}
 	
-	public static JSONObject createUser(String login, String name, String frame, String pwd) {
+	public static JSONObject createUser(String login, String name, String frame, String pwd) throws ClassNotFoundException, SQLException {
 		JSONObject ret = new JSONObject();
 		
 		if (services.TwisterDB.userExists(login)) {

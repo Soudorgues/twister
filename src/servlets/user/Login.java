@@ -1,5 +1,7 @@
 package servlets.user;
 
+import java.sql.SQLException;
+
 import services.*;
 import serviceTools.*;
 
@@ -9,7 +11,7 @@ import org.json.JSONObject;
 public class Login {
 	public Login() {}
 	
-	public static JSONObject login(String user, String mdp) {
+	public static JSONObject login(String user, String mdp) throws ClassNotFoundException, SQLException {
 		JSONObject ret = null;
 		boolean root = TwisterDB.isRoot(user);
 		String key = null;
