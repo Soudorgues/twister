@@ -17,6 +17,7 @@ public class Test1 {
 		GregorianCalendar c = new GregorianCalendar();
 		
 		/* Ajout de message */
+		/* yrdy */
 		//TwisterDB.addMessage(2, c.getTime(), "message1");
 		//TwisterDB.addMessage(2, c.getTime(), "message2");
 		//TwisterDB.addMessage(3, c.getTime(), "message3");
