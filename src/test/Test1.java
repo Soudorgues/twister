@@ -53,6 +53,7 @@ public class Test1 {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println("OK");
 		}
 
 		//TwisterDB.addtoBDUser("vinc", "Vidal", "Vincent", "pwd123");
