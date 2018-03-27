@@ -1,0 +1,82 @@
+#top{
+	height: 100px;
+	background-color: #4167b2;
+	border: groove;
+	border-width: 1px;
+	
+
+
+}
+.haut{
+	display: inline-block;
+}
+#search{
+	text-align: center;
+	display: inline-block;
+}
+#search textarea{
+	margin-bottom: 10px;
+	margin-left: 27px;
+}
+
+#top #logo{
+	width:20%;
+}
+
+#top #search{
+	width:60%;
+	margin-left: 30px;
+	;
+
+}
+
+
+#left{
+	float: left;
+	height: 600px;
+	width: 200px;
+	background-color:#eaebef;	
+	border: groove;
+	border-width: 1px;
+
+	
+}
+
+#main #listMessage{
+	background-color: ;
+	height: 300px;
+	text-align: center;
+	border-top: groove;
+	border-bottom: groove;
+	border-width: 1px;
+	
+	
+}
+#main #newMessage{
+	background-color:#eaebef;	
+	height: 100px;
+	text-align: center;
+	border-top: groove;
+	border-width: 1px;
+	
+
+}
+
+
+}
+#main #newMessage #inputNewMess{
+	width: 500px;
+
+}
+
+ #newMessage {
+ 	text-align: center;
+
+
+
+ }
+
+ #newMessage textarea{
+ 	margin-top: 10px;
+ }
+

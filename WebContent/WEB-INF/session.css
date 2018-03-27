@@ -1,0 +1,74 @@
+
+
+
+
+body{
+
+	background-color: #eaebef;
+}
+
+#connexion_main h1{
+	color: BLACK;
+	text-align: center;
+	margin-bottom: 30px;
+	font-family: Impact, "Arial Black", Arial, Verdana, sans-serif;
+}
+
+
+
+.ids{
+
+	text-align: center;
+	margin-left: 0px;
+}
+
+.buttons {
+	text-align: center;
+	margin-top: 50px;
+    margin-right:300px;
+    margin-left:;
+
+}
+
+#button{
+	background-color: #4167b2 
+}
+
+
+#connexion_main .links {
+
+	text-decoration: underline;
+	margin-left: 400px;
+
+	
+
+}
+
+.ids{
+	margin-right: 20px;
+}
+
+
+
+#i1{
+	margin-left: 45px;
+
+}
+
+
+#haut{
+	margin-top: 200px;
+}
+
+input{
+
+	border-radius: 15px;
+	margin-right: 4px
+
+
+}
+
+/*.links div{
+	text-align: right;
+	margin-right: 45px;
+}*/
