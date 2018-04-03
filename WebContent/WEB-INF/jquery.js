@@ -42,9 +42,18 @@ function makeConnexionPanel() {
     $("body").html(s);
 }
 
+function _makeConnexionPanel() {
+	$("body").load("login.html");
+}
+
+
 function makeEnregistrementPanel() {
     var s = "<div></div>";
     $("body").html(s);
+}
+
+function _makeEnregistrementPanel() {
+	$("body").load("register.html");
 }
 
 function connect(login, password) {
