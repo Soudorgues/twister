@@ -43,7 +43,8 @@ function makeConnexionPanel() {
 }
 
 function _makeConnexionPanel() {
-	$("body").load("login.html");
+	//$("body").load("login.html");
+	$("body").load("session.html");
 }
 
 

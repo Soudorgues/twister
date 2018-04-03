@@ -66,12 +66,14 @@ function init() {
     var m1 = new Message(12, "vinc", "Bonjour", new Date(), undefined);
     var m2 = new Message(13,"doums","neymar",new Date(),undefined);
     var tab = [m1, m2];
+    var s = "";
 
     for (var i = 0; i < tab.length; i++) {
-        //s = s + tab[i].getHTML();
-        $("#main").append(tab[i]);
+        s = s + tab[i].getHTML();
+    		console.log(tab[i]);
+        //$("#main").append(tab[i]);
     }
-    //document.getElementById("main").innerHTML = s;
+    document.getElementById("listMessage").innerHTML = s;
 }
 
 function makeMainPanel(fromId, fromLogin, query) {
