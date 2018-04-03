@@ -111,7 +111,8 @@ function makeMainPanel(fromId, fromLogin, query) {
 function completeMessages() {
     if (!noConnection) {
 
-    } else {
+    }
+    else {
         var tab = getFromLocalDB(env.fromId, -1, env.minId, 1);
         completeMessagesResponse(JSON.stringify(tab));
     }
