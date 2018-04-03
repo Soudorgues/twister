@@ -3,6 +3,7 @@
 	background-color: #4167b2;
 	border: groove;
 	border-width: 1px;
+	display: flex;
 	
 
 
@@ -12,11 +13,13 @@
 }
 #search{
 	text-align: center;
-	display: inline-block;
+	background-color:#4167b2
 }
 #search textarea{
 	margin-bottom: 10px;
 	margin-left: 27px;
+	margin-top: 15px;
+	border-color: blue;
 }
 
 #top #logo{
@@ -26,8 +29,12 @@
 #top #search{
 	width:60%;
 	margin-left: 30px;
-	;
+	display: block;
+	
 
+}
+#top #connect{
+	text-decoration: underline;
 }
 
 
@@ -44,10 +51,12 @@
 
 #main #listMessage{
 	background-color: ;
-	height: 300px;
+	height: 500px;
 	text-align: center;
 	border-top: groove;
 	border-bottom: groove;
+	border-right: groove;
+
 	border-width: 1px;
 	
 	
@@ -78,5 +87,17 @@
 
  #newMessage textarea{
  	margin-top: 10px;
+ 	margin-right: 100px;
  }
 
+ .message{
+ 	
+ 	border-left: 6px solid green;
+    background-color: #eaebef;
+    margin:10px;
+    margin-left: 400px;
+    margin-right: 300px;
+   
+ }
+
+o

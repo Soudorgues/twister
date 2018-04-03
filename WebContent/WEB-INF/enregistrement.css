@@ -3,22 +3,41 @@
 
 body{
 	background-color:  #eaebef;
+
 }
 h1{
 	text-align: center;
 }
+#main{
+	text-align: center;
+}
 
-#div1 #i {
+#div1 label  {
+	text-align: center;
+
 
 
 }
-
-
-#div2 input{
-	margin-left: 75px;
+#div2 label{
+	text-align: center;
 }
 
 
+#textarea #nom{
+	margin-left: 50px;
+}
+
+#labels #label2{
+	margin-left: 150px;
+}
+
+
+
+
+
+textarea{
+	border-radius: 10px;
+}
 input{
 	border-radius: 10px;
 }
@@ -27,33 +46,15 @@ input{
 	text-align: center;
 	margin-top: 30px;
 }
-#div2 input{
-	width: 350px;
-	margin-left: 50px;
-}
-
-#div2 #mdp{
-	margin-right: 40px;
-}
 
 
 
-#div1 #labels #prenom{
-margin-left: 470px;
-margin-right: 250px;
-}
-#div1 #inputs #prenom{
 
-}
-#div1 #inputs #nom{
-margin-left: 400px;
-margin-right: 150px;
-}
 
 #buttons{
 	margin-top: 50px;
 }
- #buttons #b1{
+#buttons #b1{
  	margin-right: 235px;
  	margin-left: 500px;
  	;
@@ -61,4 +62,15 @@ margin-right: 150px;
 
 #main{
 	margin-top: 100px;
+	display: block;
 }
+
+
+#div2 label{
+	text-align: center;
+	display: block;
+	width: 100px;
+	
+
+}
+
