@@ -79,40 +79,32 @@ public class TwisterDB {
 		}
 	}
 	
-	public static void addFriend(String login, String id) {
-		
-	}
-	/*
-	public static boolean checkPassword(String user, String mdp) throws ClassNotFoundException, SQLException {
+	public static void addFriend(String login, int id) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
-		Statement s = null;
-		String query  = "SELECT pwd FROM login WHERE login='" + user + "'";
-		boolean checkpwd = false;
-		
-		if (userExists(user)) {
-			s = c.createStatement();
-			ResultSet res = s.executeQuery(query);
-			while (res.next()) {
-				checkpwd = res.getString("pwd").equals(mdp);
-			}
+		if (!userExists(login)) {
+			System.out.println("User does not exist");
+		} else {
+			/* Réccuperer dernière session non expirée de l'utilisateur actif */
+			String query = "INSERT INTO friend(userId, friendId, time) VALUES (userid, friendId, NOW());";
+			Statement s = c.createStatement();
+			s.executeUpdate(query);
+			s.close();
+			c.close();
 		}
-		s.close();
-		c.close();
-		return checkpwd;
 	}
-	*/
 	
-  	public static boolean checkPassword(String login, String mdp) throws SQLException, ClassNotFoundException
-	{
-		Connection c= getMySQLConnection();
+  	public static boolean checkPassword(String login, String mdp) throws SQLException, ClassNotFoundException {
+		Connection c = getMySQLConnection();
 		Statement lecture = c.createStatement();
-		String query="select * from login where login='"+login+"';";
-		ResultSet cursor=lecture.executeQuery(query);
+		String query = "SELECT * FROM login WHERE login='" + login + "'";
+		ResultSet cursor = lecture.executeQuery(query);
+		
 		boolean retour;
 		if (!cursor.next())
 			retour=false;
 		else
 			retour=cursor.getString("pwd").equals(mdp);
+		
 		lecture.close();
 		c.close();
 		return retour;
@@ -122,7 +114,7 @@ public class TwisterDB {
 		Connection c = getMySQLConnection();
 		Statement s  = c.createStatement();
 		if (!userExists(user)) {
-			System.out.println("User doesn't exist");
+			System.out.println("User does not exist");
 			s.close();
 			c.close();
 			return null;
