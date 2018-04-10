@@ -35,7 +35,7 @@ Commentaire.prototype.getHTML = function() {
 }
 
 
-function revival1(key, value) {
+function revivall(key, value) {
     if (value.comment != undefined) {
         var c = new Message(value.id, value.auteur, value.text, value.date, value.comments);
         return c;
@@ -119,7 +119,7 @@ function completeMessages() {
 }
 
 function completeMessagesResponse(rep) {
-    var tab = JSON.parse(rep, revival1);
+    var tab = JSON.parse(rep, revivall);
     for (var i = 0; i < tab.length; i++) {
         var m = tab[i];
         alert(m.getHTML());

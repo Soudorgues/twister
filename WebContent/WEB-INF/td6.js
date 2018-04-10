@@ -35,7 +35,7 @@ Commentaire.prototype.getHTML = function() {
 }
 
 
-function revival1(key, value) {
+function revivall(key, value) {
     if (value.comment != undefined) {
         var c = new Message(value.id, value.auteur, value.text, value.date, value.comments);
         return c;
