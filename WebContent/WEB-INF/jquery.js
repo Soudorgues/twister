@@ -26,6 +26,7 @@ function connexionajax(form) {
         "data": "login="+form.login.value+ "&pwd=" + form.mdp.value,
         "success": function (rep) { console.log("Success"); },
         "error": function () { alert("Error"); }
+ 
     });
 }
 
