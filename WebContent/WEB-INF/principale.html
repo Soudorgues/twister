@@ -5,11 +5,12 @@
 		<meta charset="UTF-8">
 		<title>Principale</title>
 		<link rel="stylesheet" type="text/css" href="principale.css">
-
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="td6.js"></script>
 	</head>
 
 
-	<body>
+	<body onload="init()">
 		<div id="top">
 			<div  class ="haut" id="logo" >
 				<img src="logo.png" alt="logo" width="80px" height="80px"/>
@@ -27,12 +28,14 @@
 
 		<div id="main">
 			<div id="newMessage">
-				<textarea rows="5" cols="50" placeholder="Quoi de neuf?"></textarea>
+			<form>
+				<textarea rows="5" cols="50" placeholder="Quoi de neuf?">
+				</textarea>
+				<input id="newMessageButton" value="Twister!" type="submit" onClick="test()"/>
+			</form>
 			</div>
 			<div id="listMessage">Liste Message</div>
 		</div>
-
-	<script type="text/javascript" src="td6.js"></script>
 
 	</body>
 </html>

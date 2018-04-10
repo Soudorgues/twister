@@ -79,12 +79,15 @@ public class TwisterDB {
 		}
 	}
 	
-	public static void addFriend(String login, int id) throws ClassNotFoundException, SQLException {
+	public static void addFriend(String login1, String login2) throws ClassNotFoundException, SQLException {
 		Connection c = getMySQLConnection();
 		if (!userExists(login)) {
 			System.out.println("User does not exist");
 		} else {
 			/* Réccuperer dernière session non expirée de l'utilisateur actif */
+			/* SELECT id FROM login WHERE login=login1 */
+			/* SELECT id FROM login WHERE login=login1 */
+			
 			String query = "INSERT INTO friend(userId, friendId, time) VALUES (userid, friendId, NOW());";
 			Statement s = c.createStatement();
 			s.executeUpdate(query);

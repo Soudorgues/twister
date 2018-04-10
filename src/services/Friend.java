@@ -10,7 +10,7 @@ import serviceTools.ServiceRefused;
 public class Friend {
 	public Friend() {}
 	
-	public static JSONObject createFriend(String login, int friendId) throws ClassNotFoundException, SQLException {
+	public static JSONObject createFriend(String login, String friendId) throws ClassNotFoundException, SQLException {
 		JSONObject ret = new JSONObject();
 		
 		if (!services.TwisterDB.userExists(login)) {
@@ -28,4 +28,6 @@ public class Friend {
 			return ret;
 		}
 	}
+	/* DELETE friend */
+	
 }

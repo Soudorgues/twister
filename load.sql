@@ -9,7 +9,6 @@ CREATE TABLE login(
 	prenom		VARCHAR(255)
 );
 
-
 CREATE TABLE friend(
 	userId		INTEGER,
 	friendId		INTEGER,

@@ -19,6 +19,16 @@ function verif_formulaire_connexion(login, password) {
     return true;
 }
 
+function connexionajax(form) {
+    $.ajax({
+        "type": "POST",
+        "url" : "login",
+        "data": "login="+form.login.value+ "&pwd=" + form.mdp.value,
+        "success": function (rep) { console.log("Success"); },
+        "error": function () { alert("Error"); }
+    });
+}
+
 function error_login(msg) {
     var msg_box = "<div id=\"msg_error_connexion\">" + msg + "</div>";
     var old_msg = $("#msg_error_connexion");
@@ -35,26 +45,32 @@ function error_login(msg) {
     $("body").html(s)    remplace
     $("body").append(s)  ajoute à la fin
     $("body").prepend(s) ajoute au début
-*/
+
 function makeConnexionPanel() {
     var s = "<div id=\"connexion_main\"> ... <div id=\"link_enregistrement\" \
         onClick=\"javascript:makeEnregistrementPanel()\">...</div>";
     $("body").html(s);
 }
+*/
 
 function _makeConnexionPanel() {
 	//$("body").load("login.html");
 	$("body").load("session.html");
 }
 
+function _makeMainPanel() {
+    $("body").load("principale.html");
+}
 
+/*
 function makeEnregistrementPanel() {
     var s = "<div></div>";
     $("body").html(s);
 }
+*/
 
 function _makeEnregistrementPanel() {
-	$("body").load("register.html");
+	$("body").load("enregistrement.html");
 }
 
 function connect(login, password) {
@@ -86,7 +102,7 @@ function responseConnexion(rep) {
             follows[rep.id].add(rep.follows[i]);
         }
     }
-    makeMainPanel(); // td 07
+    _makeMainPanel(); // td 07
     error_login(rep.erreur);
 }
 
@@ -124,7 +140,7 @@ function newComment(id) {
     }
     else {
         newComment_reponse(id, JSON.Stringify(
-            new Commentaire(env.msg[id].comments.length+1,{"id":env.idlogin...})))
+        new Commentaire(env.msg[id].comments.length+1,{"id":env.idlogin})))
     }
 }
 

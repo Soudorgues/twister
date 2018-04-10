@@ -51,19 +51,16 @@
 
 #main #listMessage{
 	background-color: ;
-	height: 500px;
+	/*height: 100px; */
 	text-align: center;
-	border-top: groove;
-	border-bottom: groove;
-	border-right: groove;
 
-	border-width: 1px;
+	/*border: 1px groove black;*/
 	
 	
 }
 #main #newMessage{
 	background-color:#eaebef;	
-	height: 100px;
+	/*height: 100px;*/
 	text-align: center;
 	border-top: groove;
 	border-width: 1px;
@@ -80,9 +77,10 @@
 
  #newMessage {
  	text-align: center;
-
-
-
+ }
+ 
+ textarea {
+ 	resize: none;
  }
 
  #newMessage textarea{
@@ -99,5 +97,3 @@
     margin-right: 300px;
    
  }
-
-o

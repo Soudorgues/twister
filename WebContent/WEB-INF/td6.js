@@ -66,14 +66,17 @@ function init() {
     var m1 = new Message(12, "vinc", "Bonjour", new Date(), undefined);
     var m2 = new Message(12, "Amadou", "hello", new Date(), undefined);    
     var m3 = new Message(12, "prof",  "recu",   new Date(), undefined);
-    var tab = [m1, m2, m3];
+    var m4 = new Message(12, "prof",  "recu",   new Date(), undefined);
+    var tab = [m1, m2, m3, m4];
     var s=" ";
     for (var i = 0; i < tab.length; i++) {
-        s = s + tab[i].getHTML();
-        //$("#main").append(tab[i]);
+        s = tab[i].getHTML();
+        $("#listMessage").append(s);
     }
-    document.getElementById("listMessage").innerHTML = s;
+    //document.getElementById("listMessage").innerHTML = s;
 }
 
-
+function test() {
+    alert("teskj"); 
+}
 init();

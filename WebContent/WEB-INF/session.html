@@ -5,7 +5,8 @@
 	<meta charset="UTF-8">
 	<title>Connexion</title>
 	<link rel="stylesheet" type="text/css" href="session.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="jquery.js"></script>
 </head>
 
 
@@ -19,7 +20,7 @@
 
 <div id="connexion_main">
 		<h1>Se connecter à Twister</h1>
-		<form action="" method="POST">
+		<form action="" method="POST" onSubmit="javascript:connexionajax(this)">
 		
 		<div class="ids">
 			<span>Login</span>
