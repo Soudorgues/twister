@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 public class AddMessage extends HttpServlet {
-	public AddMessage() {}
+	public AddMessage() {
+		super();
+	}
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		GregorianCalendar c = new GregorianCalendar();
 		String userid = request.getParameter("userid");
