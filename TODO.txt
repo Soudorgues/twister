@@ -1,0 +1,5 @@
+- fonction en plus : email (mail de confirmation quand inscription, mot de passe oublié)
+- fonction en plus : nb de "j'aime" des messages
+- mise en servlet des fonctions de test
+- style des pages (HTML/CSS) (id fixes)
+- export SQL
