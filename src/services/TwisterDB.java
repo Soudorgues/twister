@@ -50,6 +50,18 @@ public class TwisterDB {
 		c.close();
 		return exist;
 	}
+	public static boolean idExists(int id) throws ClassNotFoundException, SQLException {
+		Connection c = getMySQLConnection();
+		Statement s  = c.createStatement();
+		String query = "SELECT login FROM login WHERE id=" + id;
+		
+		ResultSet res = s.executeQuery(query);
+		boolean exist = res.next();
+		res.close();
+		s.close();
+		c.close();
+		return exist;
+	}
 	
 	public static void deleteUser(String login) throws ClassNotFoundException, SQLException{
 		Connection c = getMySQLConnection();

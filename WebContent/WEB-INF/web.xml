@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd"> 
 <web-app> 
-	<display-name>CreateUserLogin</display-name> 
+	<display-name>twisterBahVidal</display-name> 
 	<servlet> 
 		<servlet-name>TestCreateUser</servlet-name> 
 		<servlet-class>servlets.user.CreateUser</servlet-class> 
@@ -11,7 +11,12 @@
 		<servlet-name>TestLogin</servlet-name> 
 		<servlet-class>servlets.user.Login</servlet-class> 
 	</servlet>
-	
+
+	<servlet> 
+		<servlet-name>AjoutMessage</servlet-name> 
+		<servlet-class>servlets.message.AddMessage</servlet-class> 
+	</servlet>	
+
 	<servlet-mapping> 
 		<servlet-name>TestCreateUser</servlet-name> 
 		<url-pattern>/create_user</url-pattern> 
@@ -22,4 +27,8 @@
 		<url-pattern>/login</url-pattern> 
 	</servlet-mapping> 
 	
+	<servlet-mapping> 
+		<servlet-name>AjoutMessage</servlet-name> 
+		<url-pattern>/add_message</url-pattern> 
+	</servlet-mapping> 
 </web-app>
