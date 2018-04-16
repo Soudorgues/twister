@@ -13,7 +13,7 @@
 	</servlet>
 
 	<servlet> 
-		<servlet-name>AjoutMessage</servlet-name> 
+		<servlet-name>Ajoutmessage</servlet-name> 
 		<servlet-class>servlets.message.AddMessage</servlet-class> 
 	</servlet>	
 
@@ -28,7 +28,7 @@
 	</servlet-mapping> 
 	
 	<servlet-mapping> 
-		<servlet-name>AjoutMessage</servlet-name> 
-		<url-pattern>/add_message</url-pattern> 
+		<servlet-name>Ajoutmessage</servlet-name> 
+		<url-pattern>/add_msg</url-pattern> 
 	</servlet-mapping> 
 </web-app>
