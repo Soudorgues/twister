@@ -11,7 +11,7 @@ import serviceTools.ServiceRefused;
 public class Message {
 	public Message() {}
 	
-	public static JSONObject addMessage(int id, Date time, String message) throws ClassNotFoundException, SQLException {
+	public static JSONObject addMessage(int id, Date time, String message) throws ClassNotFoundException, SQLException, JSONException {
 		JSONObject ret = new JSONObject();
 		
 		if (!services.TwisterDB.idExists(id)) {
@@ -19,13 +19,8 @@ public class Message {
 			return ret;
 		}
 		else {
-			try {
-				ret.put("status", "OK");
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			services.TwisterDB.addMessage(id, time, message);
+			ret.put("status", "OK");
 			return ret;
 		}
 	}
