@@ -3,3 +3,10 @@
 - mise en servlet des fonctions de test
 - style des pages (HTML/CSS) (id fixes)
 - export SQL
+- changement scheme base de données
+
+User test:
+login : mark
+name : Marc
+fname : jacob
+pwd : marcjacob
